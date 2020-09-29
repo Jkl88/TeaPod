@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<meta charset="utf-8">
+		<link rel="icon" href="favicon.ico" type="image/x-icon">
+		<title>Умный чайник</title>
+		<style>
+			div#txt_1 button {
+				font-size: 20px;
+				line-height: 35px;
+				}
+			
+			div#txt_1 .line {
+				height: 50px;
+				}
+			
+			i {
+				color: #0093ff;
+				}
+			
+			p {
+				width: 324px;
+				font-size: 12px;
+				}
+			
+			.tabs {
+				width: 100%;
+				padding: 0px;
+				margin: 0 auto;
+				}
+			
+			.tabs>input {
+				display:none;
+				}
+			
+			.tabs>div {
+				display: none;
+				padding: 12px;
+				border: 1px solid #C0C0C0;
+				background: #FFFFFF;
+				}
+			
+			.tabs>label {
+				display: inline-block;
+				padding: 2px 4px;
+				margin: 0 -5px -1px 0;
+				text-align: center;
+				color: #666666;
+				border: 1px solid #C0C0C0;
+				background: #1fa3ecbd;
+				cursor: pointer;
+				}
+				
+			.tabs>input:checked + label {
+				color: #000000;
+				border: 1px solid #C0C0C0;
+				border-bottom: 1px solid #FFFFFF;
+				background: #FFFFFF;
+				}
+			
+			div.line{
+				position: relative;
+				height: 26px;
+				}
+			
+			div.a{
+				position: absolute;
+				width: 49%;
+				}
+			
+			div.b{
+				position: absolute;
+				left: 50%; width: 49%;
+				}
+			
+			body{
+				text-align: center;
+				font-family:verdana;
+				position:fixed;
+				width:100%;
+				}
+			
+			button{
+				border:0;
+				border-radius:0.3rem;
+				background-color:#a0d5f1;
+				color:rgb(0,47,189);
+				line-height:22px;
+				font-size:13px;
+				width:100%;
+				padding: 0px;
+				}
+			button#online, #water{
+				background-color:#ff8e8e;
+			}
+				
+			button:after {
+				content: "";
+				background: #f1f1f1;
+				display: block;
+				position: absolute;
+				padding-top: 11%;
+				padding-left: 100%;
+				margin-left: 0px !important;
+				margin-top: -11%;
+				opacity: 0;
+				transition: all 0.8s;
+			}
+
+			button:active:after {
+				padding: 0;
+				margin: 0;
+				opacity: 1;
+				transition: 0s
+			}
+				
+			#tab_1:checked ~ #txt_1, #tab_2:checked ~ #txt_2, #tab_3:checked ~ #txt_3, #tab_4:checked ~ #txt_4, #tab_5:checked ~ #txt_5{
+				display: block;
+				}
+			* {
+				box-sizing: border-box;
+				}
+
+			body {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+
+			.checkbox {
+				display: none;
+			}
+
+			.checkbox + label {
+				margin-left: 87px;
+				display: inline-block;
+				position: relative;
+				width: 150px;
+				height: 40px;
+				background: linear-gradient(to right, #fd1a15 0, #fc8b34 45%, #7fd03e 55%, #007177 100%) 0 0;
+				background-size: 340px 100%;
+				border-radius: 20px;
+				padding: 7px;
+				cursor: pointer;
+				transition: all 500ms ease;
+				box-shadow: 0 0px 10px rgba(0, 0, 0, 0.2) inset;
+			}
+			.checkbox + label:before {
+				  content: "Off";
+				  width: 34px;
+				  height: 34px;
+				  position: absolute;
+				  left: 3px;
+				  top: 3px;
+				  border-radius: 100%;
+				  background: #fff;
+				  text-align: center;
+				  line-height: 35px;
+				  font-family: "Cabin", sans-serif;
+				  font-size: 12px;
+				  font-weight: bold;
+				  color: #fd1a15;
+				  letter-spacing: 3px;
+				  text-transform: uppercase;
+				  transition: left 500ms ease, color 500ms ease, -webkit-transform 150ms ease;
+				  transition: left 500ms ease, color 500ms ease, transform 150ms ease;
+				  transition: left 500ms ease, color 500ms ease, transform 150ms ease, -webkit-transform 150ms ease;
+			}
+			.checkbox + label:active:before {
+			  -webkit-transform: scale(0.95);
+					  transform: scale(0.95);
+			}
+
+			.checkbox:checked + label {
+				background-position-x: -190px;
+			}
+			.checkbox:checked + label:before {
+				content: "On";
+				color: #007177;
+				left: 113px;
+			}
+			.checkboxIP {
+				display: none;
+			}
+
+			.checkboxIP + label {
+				margin-left: 79px;
+				display: inline-block;
+				position: relative;
+				width: 90px;
+				height: 24px;
+				background: linear-gradient(to right, #fd1a15 0, #fc8b34 45%, #7fd03e 55%, #007177 100%) 0 0;
+				background-size: 340px 100%;
+				border-radius: 12px;
+				padding: 7px;
+				cursor: pointer;
+				transition: all 500ms ease;
+				box-shadow: 0 0px 10px rgba(0, 0, 0, 0.2) inset;
+			}
+			.checkboxIP + label:before {
+				  content: "O";
+				  width: 20px;
+				  height: 20px;
+				  position: absolute;
+				  left: 2px;
+				  top: 2px;
+				  border-radius: 100%;
+				  background: #fff;
+				  text-align: center;
+				  line-height: 20px;
+				  font-family: "Cabin", sans-serif;
+				  font-size: 14px;
+				  font-weight: bold;
+				  color: #fd1a15;
+				  letter-spacing: 3px;
+				  text-transform: uppercase;
+				  transition: left 500ms ease, color 500ms ease, -webkit-transform 150ms ease;
+				  transition: left 500ms ease, color 500ms ease, transform 150ms ease;
+				  transition: left 500ms ease, color 500ms ease, transform 150ms ease, -webkit-transform 150ms ease;
+			}
+			.checkboxIP + label:active:before {
+			  -webkit-transform: scale(0.95);
+					  transform: scale(0.95);
+			}
+
+			.checkboxIP:checked + label {
+				background-position-x: -190px;
+			}
+			.checkboxIP:checked + label:before {
+				content: "I";
+				color: #007177;
+				left: 68px;
+			}
+			#modal {
+				position: fixed;
+				background-color: #0089fff5;
+				width: 350px;
+				height: 100%;
+				display: none;
+				z-index: 1;
+				text-align: center;
+				padding-top: 110px;
+				color: darkblue;
+			}
+			body.overflow-hidden {
+				overflow: hidden;
+			}
+		</style>
+	</head>
+	<body onload='init()'>
+		<div style='text-align:left;display:inline-block;min-width:350px;'>
+			<div id="modal"><h1>Перезагрузка...</h1></div>
+			<script> 
+				
+				let heardLed = ["#000000","#ff0000","#ff0000","#000000","#000000","#ff0000","#ff0000","#000000",
+								"#ff0000","#ff0000","#ff0000","#ff0000","#ff0000","#ff0000","#ff0000","#ff0000",
+								"#ff0000","#ff0000","#ff0000","#ff0000","#ff0000","#ff0000","#ff0000","#ff0000",
+								"#ff0000","#ff0000","#ff0000","#ff0000","#ff0000","#ff0000","#ff0000","#ff0000",
+								"#000000","#ff0000","#ff0000","#ff0000","#ff0000","#ff0000","#ff0000","#000000",
+								"#000000","#000000","#ff0000","#ff0000","#ff0000","#ff0000","#ff0000","#000000",
+								"#000000","#000000","#ff0000","#ff0000","#ff0000","#ff0000","#000000","#000000",
+								"#000000","#000000","#000000","#ff0000","#ff0000","#000000","#000000","#000000",
+								];
+				let picManLed =["#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000",
+								"#000000","#000000","#eb00c7","#eb00c7","#eb00c7","#5e0075","#000000","#000000",
+								"#000000","#eb00c7","#eb00c7","#eb00c7","#eb00c7","#eb00c7","#5e0075","#000000",
+								"#eb00c7","#eb00c7","#ffffff","#ffffff","#eb00c7","#ffffff","#ffffff","#5e0075",
+								"#eb00c7","#eb00c7","#ffffff","#000000","#eb00c7","#000000","#ffffff","#5e0075",
+								"#eb00c7","#eb00c7","#eb00c7","#eb00c7","#eb00c7","#eb00c7","#5e0075","#5e0075",
+								"#eb00c7","#eb00c7","#eb00c7","#eb00c7","#eb00c7","#eb00c7","#5e0075","#5e0075",
+								"#eb00c7","#000000","#eb00c7","#eb00c7","#000000","#eb00c7","#5e0075","#5e0075",
+								];
+				/*var modal = document.getElementById('modal');*/
+				let arrDebug=[];
+				var divDebug;
+				var apBut;
+				var rstBut;
+				var resChe;
+				var JSONData;
+				var date = new Date;
+				var cbox;
+				var cbox2;
+				var txtInner;
+				var viewIP;
+				var mqttBut;
+				var checkMQTT;
+				var ipMQTT;
+				var portMQTT;
+				var onlineMQTT;
+				var MQTT = {};
+					MQTT.ip = "192.168.255.255";
+					MQTT.port = "1883";
+				var espPass;
+				var espName;
+				var leds= [];
+				var matrix=8;
+				var nLed=0;
+				var h, s, l;
+				var click = false;
+				var setTemp_;
+				var wLevel;
+				var fiveC;
+				var sixC;
+				var sevenC;
+				var eightC;
+				var nineC;
+				var hundredC;
+				var wat;
+				var _temp=0;
+				var _start=0;
+				var butStart;
+				var butTemp;
+				var connection = new WebSocket('ws://'+location.hostname+':81/', ['arduino']);
+				connection.onopen = function () {  connection.send('{"Connect":"'+date.getHours()+':'+date.getMinutes()+'"}'); onLene();}
+				connection.onerror = function (error) {    console.log('WebSocket Error ', error);}
+				connection.onmessage = function (e) {  console.log('Server: ', e.data);
+														JSONData = JSON.parse(e.data);JSin ();}
+				function onLine(){
+					
+					var onlineStat;
+					onlineStat=document.getElementById("online");
+					onlineStat.style.backgroundColor="green";
+					onlineStat.style.color="#ffffff";
+					onlineStat.innerText="online";
+				}
+				function waterLevel(_setW){
+					wLevel = _setW;
+					switch (wLevel) {
+						case 0:
+							wat.innerText="Нет воды";
+							wat.style.backgroundColor="#ff8e8e";
+							break;
+						case 1:
+							wat.innerText="Вода 1/2";
+							wat.style.backgroundColor="#a0d5f1";
+							break;
+						case 2:
+							wat.innerText="Вода full";
+							wat.style.backgroundColor="#1fa3ecbd";
+							break;
+					}
+				}
+				function setTemp(flag, _set){
+					setTemp_ = _set;
+					switch (setTemp_) {
+						case 50:
+							fiveC.style.backgroundColor="#ff8e8e";
+							sixC.style.backgroundColor="#a0d5f1";
+							sevenC.style.backgroundColor="#a0d5f1";
+							eightC.style.backgroundColor="#a0d5f1";
+							nineC.style.backgroundColor="#a0d5f1";
+							hundredC.style.backgroundColor="#a0d5f1";
+							break;
+						case 60:
+							fiveC.style.backgroundColor="#ff8e8e";
+							sixC.style.backgroundColor="#ff8e8e";
+							sevenC.style.backgroundColor="#a0d5f1";
+							eightC.style.backgroundColor="#a0d5f1";
+							nineC.style.backgroundColor="#a0d5f1";
+							hundredC.style.backgroundColor="#a0d5f1";
+							break;
+						case 70:
+							fiveC.style.backgroundColor="#ff8e8e";
+							sixC.style.backgroundColor="#ff8e8e";
+							sevenC.style.backgroundColor="#ff8e8e";
+							eightC.style.backgroundColor="#a0d5f1";
+							nineC.style.backgroundColor="#a0d5f1";
+							hundredC.style.backgroundColor="#a0d5f1";
+							break;
+						case 80:
+							fiveC.style.backgroundColor="#ff8e8e";
+							sixC.style.backgroundColor="#ff8e8e";
+							sevenC.style.backgroundColor="#ff8e8e";
+							eightC.style.backgroundColor="#ff8e8e";
+							nineC.style.backgroundColor="#a0d5f1";
+							hundredC.style.backgroundColor="#a0d5f1";
+							break;
+						case 90:
+							fiveC.style.backgroundColor="#ff8e8e";
+							sixC.style.backgroundColor="#ff8e8e";
+							sevenC.style.backgroundColor="#ff8e8e";
+							eightC.style.backgroundColor="#ff8e8e";
+							nineC.style.backgroundColor="#ff8e8e";
+							hundredC.style.backgroundColor="#a0d5f1";
+							break;
+						case 100:
+							fiveC.style.backgroundColor="#ff8e8e";
+							sixC.style.backgroundColor="#ff8e8e";
+							sevenC.style.backgroundColor="#ff8e8e";
+							eightC.style.backgroundColor="#ff8e8e";
+							nineC.style.backgroundColor="#ff8e8e";
+							hundredC.style.backgroundColor="#ff8e8e";
+							break;
+						if(flag){connection.send('{"heating":"'+setTemp_+'"}');}
+					}
+
+				}
+				function currentTemp(_cTemp){
+					if(_start){
+						butStart.innerText="Нагрев..."+_cTemp+"*C";
+					}
+				}
+				function start(flag){
+					if(flag){_start=!_start; connection.send('{"start":"'+_start+'"}');}
+					if (_start){butStart.style.backgroundColor="#ff8e8e"; butStart.disabled = true; butStart.innerText="Ошибка"; }
+					else if(_start){butStart.style.backgroundColor="#ff8e8e"; butStart.disabled = false; butStart.innerText="Нагрев..."}
+					else{butStart.style.backgroundColor="#a0d5f1"; butStart.disabled = false; butStart.innerText="Старт";}
+				}
+				function setCheTemp(flag){
+					if(flag){_temp=!_temp; connection.send('{"heating":"'+_temp+'"}');}
+					if(_temp){butTemp.style.backgroundColor="#ff8e8e";}
+					else{butTemp.style.backgroundColor="#a0d5f1";}
+				}
+				function JSin (){
+					if (JSONData.debug!=undefined){
+						Debug(JSONData.debug);
+					}
+					if(JSONData.currentTemp!=undefined){
+						currentTemp(JSONData.currentTemp);
+					}
+					if(JSONData.setTemp!=undefined){
+						setTemp(false, JSONData.setTemp);
+					}
+					if(JSONData.water!=undefined){
+						waterLevel(JSONData.water);
+					}
+					if(JSONData.start!=undefined){
+						_start=JSONData.star;
+						start(false);
+					}
+					if (JSONData.heating!=undefined){	
+						
+						_temp=JSONData.heating;
+						setCheTemp(false);
+					}
+					if (JSONData.reset=="1"){
+						modal.style.display = "block";
+					}
+					if (JSONData.IP!=undefined){
+						esp.IP = JSONData.IP;
+						txtInner = document.getElementById('myIP');
+						txtInner.innerText = 'IP: '+esp.IP;
+					}
+					if (JSONData.nameESP!=undefined){
+						esp.name = JSONData.nameESP;
+						espName.value = esp.name;
+					}
+					if (JSONData.mqtt!=undefined){
+						MQTT.ip = JSONData.mqtt;
+						ipMQTT = document.getElementById('ipMQTT');
+						ipMQTT.value = MQTT.ip;
+					}
+					if (JSONData.viewIP!=undefined){
+						if(JSONData.viewIP=="0"){
+							viewIP.checked=false;
+						}else if (JSONData.viewIP=="1"){
+							viewIP.checked=true;
+						}
+					}
+					if (JSONData.checkMQTT!=undefined){
+						if(JSONData.checkMQTT=="0"){
+							checkMQTT.checked=false;
+						}else{
+							checkMQTT.checked=true;
+						}
+					}
+					if (JSONData.onlineMQTT!=undefined){
+						if(JSONData.checkMQTT=="0"){
+							onlineMQTT.style.color = "red";
+							onlineMQTT.innerText = "MQTT: offline"
+						}else{
+							onlineMQTT.style.color = "green";
+							onlineMQTT.innerText = "MQTT: online"
+						}
+					}
+				}
+				
+				var esp = {};
+					esp.ver = 'TeaPod v2';
+					esp.data = '25.09.2020';
+					esp.plat = 'NodeMcu ESP 12E';
+					esp.fleshMode = 'DIO';
+					esp.fleshSize = '4M(2M SPIFFS)';
+					esp.lwIP = 'MSS=536';
+					esp.rstMet = 'ck';
+					esp.crystal = '26MHz';
+					esp.fleshFreq = '40MHz';
+					esp.CUP = '80MHz';
+					esp.speed = '115200';
+					esp.name = 'nameESP';
+					esp.IP = 'IP';
+				
+				function but_col() {
+					connection.send('{"hue":"'+ren_col.value+'","sat":"'+ren_nas.value+'","bri":"'+ren_bri.value+'"}');
+				}
+				function butEff() {
+					connection.send('{"delay":"'+ren_del.value+'"}');
+				}
+				function butClk(eff){
+					connection.send('{"ledMode":"'+eff+'"}');
+				}
+				function touchMoveHandler(e){
+					e.preventDefault();
+					var touches = e.changedTouches;
+					for (var i = 0; i < touches.length; i++) {
+						var relativeX = touches[i].pageX - example.offsetLeft;
+						var relativeY = touches[i].pageY - example.offsetTop;
+						if(relativeX > 0 && relativeX < example.width && relativeY > 0 && relativeY < example.height) {
+							xy.innerHTML= "x: "+relativeX+"y: "+relativeY;
+							leds.forEach(function(item, i, leds) {
+								if(item[0]<=relativeX&&relativeX<=item[2]&&item[1]<=relativeY&&relativeY<=item[3]&&item[4]!=ctx.fillStyle){
+									ctx.fillRect(item[0], item[1], example.height/matrix, example.height/matrix);
+									ctx.strokeRect(item[0], item[1], example.height/matrix, example.height/matrix);
+									item[4]=ctx.fillStyle
+									connection.send('{"pixel":"'+i+'","color":"'+item[4]+'"}');
+								}
+							});
+						}
+					}
+				}
+				function mouseUpHandler (e){
+						click = false;
+				}
+				function mouseDownHandler(e){
+						click=true;
+				}
+				function mouseMoveHandler(e) {
+					var relativeX = e.clientX - example.offsetLeft;
+					var relativeY = e.clientY - example.offsetTop;
+					if(relativeX > 0 && relativeX < example.width && relativeY > 0 && relativeY < example.height) {
+						xy.innerHTML= "x: "+relativeX+"y: "+relativeY;
+						if (click){
+							leds.forEach(function(item, i, leds) {
+								if(item[0]<=relativeX&&relativeX<=item[2]&&item[1]<=relativeY&&relativeY<=item[3]&&item[4]!=ctx.fillStyle){
+									ctx.fillRect(item[0], item[1], example.height/matrix, example.height/matrix);
+									ctx.strokeRect(item[0], item[1], example.height/matrix, example.height/matrix);
+									item[4]=ctx.fillStyle
+									connection.send('{"pixel":"'+i+'","color":"'+item[4]+'"}');
+								   }
+								});
+							}
+						}
+					}
+				function init() {
+					window.document.all.tab_1.checked=true;
+					var example = document.getElementById("example");
+					ctx = example.getContext('2d');
+					example.height = 324;
+					example.width = 324;
+					var n = 5, m = 64;
+					for (var i = 0; i < m; i++){
+						leds[i] = [];
+						for (var j = 0; j < n; j++){
+							leds[i][j] = 0;
+					}}
+					divDebug = document.getElementById("debug");
+					xy = document.getElementById("xy");
+					h=document.getElementById("can_h");
+					s=document.getElementById("can_s");
+					l=document.getElementById("can_l");
+					canv();
+					document.addEventListener("mousedown", mouseDownHandler, false);
+					document.addEventListener("mousemove", mouseMoveHandler, false);
+					document.addEventListener("mouseup", mouseUpHandler, false);
+					//document.addEventListener("touchstart", touchStartHandler, false);
+					document.addEventListener("touchmove", touchMoveHandler, false);
+					//document.addEventListener("touchend", touchEndHandler, false);
+					
+					butTemp = document.getElementById('che_temp');
+					fiveC=document.getElementById("50C");
+					sixC=document.getElementById("60C");
+					sevenC=document.getElementById("70C");
+					eightC=document.getElementById("80C");
+					nineC=document.getElementById("90C");
+					hundredC=document.getElementById("100C");
+					wat=document.getElementById('water');
+					butStart=document.getElementById('but_start');
+
+					onlineMQTT = document.getElementById('onlineMQTT');
+					espPass = document.getElementById('passESP');
+					espName = document.getElementById('nameESP');
+					ipMQTT = document.getElementById('ipMQTT');
+					portMQTT = document.getElementById('portMQTT');
+					checkMQTT = document.getElementById('checkMQTT');	
+					checkMQTT.onclick = function(){if(checkMQTT.checked){connection.send('{"checkMQTT":"5"}');}
+											    else           	  {connection.send('{"checkMQTT":"0"}');}
+									 }
+					viewIP = document.getElementById('viewIP');	
+					viewIP.onclick = function(){if(viewIP.checked){connection.send('{"viewIP":"1"}');}
+											    else           	  {connection.send('{"viewIP":"0"}');}
+									 }					
+					/*cbox = document.getElementById('codepen');
+					cbox.onclick = function(){if(cbox.checked){connection.send('{"ledMode":"1"}');}
+											  else            {connection.send('{"ledMode":"0"}');}
+								   }
+					cbox2 = document.getElementById('codepen2');
+					cbox2.onclick = function(){if(cbox2.checked){connection.send('{"relMode":"1"}');}
+											  else            {connection.send('{"relMode":"0"}');}
+								   }*/
+					rstBut = document.getElementById('but_rst');
+					rstChe = document.getElementById('che_rst');
+					rstBut.onclick = function(){connection.send('{"reset":"1","wifiDC":"'+rstChe.checked+'"}');}
+					apBut = document.getElementById('saveAP');
+					mqttBut = document.getElementById('saveMQTT');
+					apBut.onclick = function(){connection.send('{"nameESP":"'+espName.value+'","passESP":"'+espPass.value+'"}');}
+					mqttBut.onclick = function(){connection.send('{"mqtt":"'+ipMQTT.value+'","mqttPort":"'+portMQTT.value+'"}');}
+					
+				}
+				function canv () {
+				///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+					ctx.clearRect(0, 0, example.width, example.height);
+					for(i=0; i<matrix; i++){
+						for(j=0; j<matrix; j++){
+							ctx.strokeRect(example.width/matrix*j, example.width/matrix*i, example.width/matrix, example.width/matrix);
+							leds[nLed][0] = example.width/matrix*j;
+							leds[nLed][1] = example.width/matrix*i;
+							leds[nLed][2] = leds[nLed][0]+example.width/matrix;
+							leds[nLed][3] = leds[nLed][1]+example.width/matrix;
+							leds[nLed][4] = "#ffffff";
+							nLed++;
+						}
+					}
+					xy.style.backgroundColor="#59bbf1";
+					ctx.fillStyle="#59bbf1";
+				//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
+				}
+				function can_col(){
+					xy.style.backgroundColor="hsl("+h.value+", "+s.value+"%, "+l.value+"%)";
+					ctx.fillStyle="hsl("+h.value+", "+s.value+"%, "+l.value+"%)";
+				}
+				function show(s){
+					
+					if(s==1){
+						picManLed.forEach(function(item, i, picManLed){
+							ctx.fillStyle=item;
+							ctx.fillRect(leds[i][0], leds[i][1], example.height/matrix, example.height/matrix);
+							ctx.strokeRect(leds[i][0], leds[i][1], example.height/matrix, example.height/matrix);
+							connection.send('{"pixel":"'+i+'","color":"'+item+'"}');
+						});
+					}
+					else if (s==2){
+						heardLed.forEach(function(item, i, heardLed){
+							ctx.fillStyle=item;
+							ctx.fillRect(leds[i][0], leds[i][1], example.height/matrix, example.height/matrix);
+							ctx.strokeRect(leds[i][0], leds[i][1], example.height/matrix, example.height/matrix);
+							connection.send('{"pixel":"'+i+'","color":"'+item+'"}');
+						});
+					}
+				}
+				function Debug (item){
+					var dateDebug = new Date();
+					var newTime;
+					if(dateDebug.getHours()<10){newTime="0"+dateDebug.getHours();}
+					else{newTime=dateDebug.getHours();}
+					if(dateDebug.getMinutes()<10){newTime+=":0"+dateDebug.getMinutes();}
+					else{newTime+=":"+dateDebug.getMinutes();}
+					if(dateDebug.getSeconds()<10){newTime+=":0"+dateDebug.getSeconds();}
+					else{newTime+=":"+dateDebug.getSeconds();}
+					
+					if (arrDebug.length>=20){arrDebug.splice(arrDebug.length-1,1);}
+					arrDebug.unshift(newTime+" - "+item);
+					arrDebug.forEach(function(item, i, arrDebug) {
+															if (i==0){divDebug.innerHTML=item+"</br>"}
+															else{divDebug.innerHTML+=item+"</br>"}
+														});
+				}
+								
+				
+			</script>
+			<div class="tabs">
+				<input type="radio" name="inset" value="" id="tab_1"><label for="tab_1">Главная</label>
+				<input type="radio" name="inset" value="" id="tab_2"><label for="tab_2" style="display: none;">Эффекты</label>
+				<input type="radio" name="inset" value="" id="tab_3"><label for="tab_3">Настройка</label>
+				<input type="radio" name="inset" value="" id="tab_4"><label for="tab_4" style="display: none;">Канвас</label>
+				<input type="radio" name="inset" value="" id="tab_5"><label for="tab_5">Debug</label>
+				<div id="txt_1">
+					<div class="line"><div class="a"><button id="online">offline</button></div><div class="b"><button id="water">Нет воды</button></div></div>
+					<div class="line"><div class="a"><button onclick="setTemp(true, 50)" id="50C">50*C</button></div><div class="b"><button onclick="setTemp(true, 60)" id="60C">60*C</button></div></div>
+					<div class="line"><div class="a"><button onclick="setTemp(true, 70)" id="70C">70*C</button></div><div class="b"><button onclick="setTemp(true, 80)" id="80C">80*C</button></div></div>
+					<div class="line"><div class="a"><button onclick="setTemp(true, 90)" id="90C">90*C</button></div><div class="b"><button onclick="setTemp(true, 100)" id="100C">100*C</button></div></div>
+					<div class="line"><div class="a"><button onclick="start(true)" id="but_start">Старт</button></div><div class="b"><button onclick="setCheTemp(true)" id="che_temp">Поддержка *t</button></div></div>
+					<div class="line"><div class="a"><button id="but_rst">Перезагрузка</button></div><div class="b"><input id="che_rst" type="checkbox" style="margin-top: 12px;margin-left: 13px;margin-right: 13px;">Сброс WIFI</div></div>
+				</div>
+
+				<div id="txt_2">
+					<div class="line">Скорость: <input id="ren_del" type="range" min="0" max="100" style="width: 185px; height: 10px;" oninput="butEff()"></div>
+					<hr>
+					<div class="line"><div class="a"><button onclick = "butClk(2)" >плавная смена цветов		</button></div><div class="b"><button onclick = "butClk(3)" >крутящаяся радуга		</button></div></div>
+					<div class="line"><div class="a"><button onclick = "butClk(4)" >rgb пропеллер				</button></div><div class="b"><button onclick = "butClk(5)" >бегающий светодиод		</button></div></div>
+  					<div class="line"><div class="a"><button onclick = "butClk(6)" >пульс одним цветом			</button></div><div class="b"><button onclick = "butClk(7)" >пульс со сменой цветов	</button></div></div>
+					<div class="line"><div class="a"><button onclick = "butClk(8)" >полицейская мигалка 		</button></div><div class="b"><button onclick = "butClk(9)" >стробоскоп				</button></div></div>
+					<div class="line"><div class="a"><button onclick = "butClk(10)">красный и синий				</button></div><div class="b"><button onclick = "butClk(11)">красные и синие		</button></div></div>
+  					<div class="line"><div class="a"><button onclick = "butClk(12)">флаг России					</button></div><div class="b"><button onclick = "butClk(13)">белый, синий, красный	</button></div></div>
+					<div class="line"><div class="a"><button onclick = "butClk(14)">вспышки случайных			</button></div><div class="b"><button onclick = "butClk(15)">сине бело голубой		</button></div></div>
+				</div>
+				
+				<div id="txt_3">
+					<div class="line"><div class="a" style="margin-top: 2px;"><p style="display: contents;">Показывать IP:</p></div><div class="b"><input class="checkboxIP" type="checkbox" id="viewIP"><label for="viewIP"></label></div></div>
+					<p id="myIP">IP:</p>
+					<form name="AP">
+						<p>Имя и пароль точки доступа:</p>
+						<input type="text" id="nameESP" size="19" maxlength="19" required placeholder="Имя">
+						<input type="password" id="passESP" size="19" maxlength="19" required placeholder="Пароль">
+						<div class="line"><div class="a"><button id="saveAP">Сохранить</button></div><div class="b"></div></div>
+					</form>
+                    <form name="mqtt">
+						<div class="line"><div class="a" style="margin-top: 2px;"><p id="onlineMQTT" style="display: contents;">MQTT:</p></div><div class="b"><input class="checkboxIP" type="checkbox" id="checkMQTT"><label for="checkMQTT"></label></div></div>
+						<input type="text" size="19" id="ipMQTT" maxlength="19" required placeholder="IP">
+						<input type="text" id="portMQTT" size="19" maxlength="19" required placeholder="порт(1883)" value="1883" >
+						<div class="line"><div class="a"><button id="saveMQTT">Сохранить</button></div><div class="b"></div></div>
+					</form>
+					<p>Прошивка:</p><div style="text-align:center;margin-top: 20px;margin-bottom: 10px;">
+						<form method="POST" action="/update" enctype="multipart/form-data">
+							<input type="file" name="update" style="width: 234px;">
+							<input type="submit" value="Обновить" style="width: 90px;">
+						</form>
+					</div>
+				</div>
+
+				<div id="txt_4">
+					<canvas id="example"></canvas>
+					<p id="xy">Привет</p>
+					<div class="line">H:			<input id="can_h" type="range" min="0" max="359" value="0"   style="margin-left: 50px; width: 245px; height: 10px;" oninput="can_col()"></div>
+					<div class="line">S:			<input id="can_s" type="range" min="0" max="100" value="100"  style="margin-left: 50px; width: 245px; height: 10px;" oninput="can_col()"></div>
+					<div class="line">L:			<input id="can_l" type="range" min="0" max="100" value="50" style="margin-left: 50px; width: 245px; height: 10px;" oninput="can_col()"></div>
+					<p>
+						<strong>Разработчик:</strong><br>
+						Белоусов О.И. <br>
+						с наилучшими пожеланиями для Лелика<br>
+						отдельное СПАСИБО <a href='http://alexgyver.ru/'>AlexGyver Technologies</a>
+					</p>
+					<p><i>в переменной 'esp'(JavaScript) данные по модулю</i></p>
+				</div>
+				<div id="txt_5">
+					<div id="debug"></div><p>
+						<strong>Разработчик:</strong><br>
+						Белоусов О.И. <br>
+						отдельное СПАСИБО <a href='http://alexgyver.ru/'>AlexGyver Technologies</a>
+					</p>
+					<p><i>в переменной 'esp'(JavaScript) данные по модулю</i></p>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
+
+
+		
